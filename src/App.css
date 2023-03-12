@@ -1,8 +1,136 @@
-.gridcontainer {
-  display: grid;
+.banner {
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  background-color: #00A5E5; 
+  width: 100vw; 
+  height: 3%;
+}
+h1 {
+  font-size: 23pt;
+  color: #262626;
+  background-color: #FFFFFF;
+  text-align: center;
+  padding: 3%;
 }
 
+body {
+  background-color: #F8F9FA;
+}
+.gridContainer {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 5% repeat(4, 23.75%);
+  grid-template-areas: "first-row"
+                       "second-row"
+                       "third-row"
+                       "fourth-row"
+                       "fifth-row";
+  width: 90vw;
+  margin: 5% auto;
+}
+.citygrid {
+
+}
 .currentweather {
-  grid-column: ;
-  background-color: rgb(243, 220, 185);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 10% 1%;
+  border: 2px solid #E6E6E6;
+  border-radius: 6px;
+  margin: 5% auto;
+  padding: 0 5% 2% 5%;
+  font-family:Arial;
+  background-color: #FFFFFF;
+}
+.forecast {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: 2 1fr;
+  gap: 2%;
+  padding: auto;
+}
+.city-picker{
+  text-align: center;
+  grid-area: first-row;
+}
+#cities {
+  width: 100%;
+  border: 2px solid #E6E6E6;
+  border-radius: 6px;
+  padding: 1% 2%;
+  font-size: 13pt;
+  color: #262626;
+}
+
+.grid-item {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.topleft {
+  grid-column: span 2;
+  text-align: left;
+  justify-content: center;
+}
+.topright {
+  grid-column: 4 / span 2;
+  font-size: 26pt;
+  color: #262626;
+  flex-direction: row;
+  align-items: center;
+  justify-content: end;
+}
+.botleft {
+  grid-column: span 2;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+.botright {
+  grid-column: 4 / span 2;
+  text-align: right;  
+  justify-content: flex-end;
+}
+.plus{
+  border: 2px solid #E6E6E6;
+  border-radius: 6px;
+}
+
+.tophalf { 
+  text-align: center;
+  padding: 5% 1% 6% 1%;
+}
+.tophalf > .temperature{
+  font-size: 15pt;
+}
+.tophalf > .time{
+  font-size: 13pt;
+}
+.tophalf > .icon{
+  
+}
+
+
+.bothalf {
+  text-align: center;
+  background-color: #E5F6FD;
+  font-size: 10pt;
+  color: #70757A;
+  padding: 5%;
+}
+.city {
+  font-size: 19pt;
+  color: #262626;
+}
+
+.date {
+  font-size: 15pt;
+  color: #262626;
+}
+
+.sky, .time, .botright {
+  font-size: 13pt;
+  color: #70757A;
 }
