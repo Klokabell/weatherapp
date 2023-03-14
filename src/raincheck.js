@@ -1,7 +1,7 @@
 
-const rainCheck = (raining) =>{
+const rainCheck = (raining, hour) =>{
     if(raining.rain){
-        return raining.rain["1h"] +"mm"
+        return raining.rain[hour+"h"] +"mm"
     }
     else return "0 mm"
 }

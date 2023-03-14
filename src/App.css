@@ -1,10 +1,23 @@
+@media (max-width: 600px) {
+  #ficon, #wicon {
+    max-width: 60%;
+  }
+  .topleft {
+    padding-top: 10%;
+  }
+
+}
+.title {
+  width: 100%;
+  min-width: 360px;
+  display: flex;
+  flex-direction: column;
+}
 .banner {
-  position: absolute; 
-  top: 0; 
-  left: 0; 
+  position: relative; 
   background-color: #00A5E5; 
-  width: 100vw; 
-  height: 3%;
+  height: 5vh;
+
 }
 h1 {
   font-size: 23pt;
@@ -12,6 +25,7 @@ h1 {
   background-color: #FFFFFF;
   text-align: center;
   padding: 3%;
+  border-bottom: 2px solid #E6E6E6;
 }
 
 body {
@@ -19,19 +33,22 @@ body {
 }
 .gridContainer {
   display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 5% repeat(4, 23.75%);
-  grid-template-areas: "first-row"
-                       "second-row"
-                       "third-row"
-                       "fourth-row"
-                       "fifth-row";
-  width: 90vw;
-  margin: 5% auto;
+  grid-template-rows: repeat(5, auto);
+  width: 90%;
+  margin: 0 auto;
 }
-.citygrid {
 
+.city-picker{
+  text-align: center;
+  grid-template-rows: 1;
+  height: fit-content;
 }
+
+.currentcity {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto;}
+
 .currentweather {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -51,11 +68,8 @@ body {
   gap: 2%;
   padding: auto;
 }
-.city-picker{
-  text-align: center;
-  grid-area: first-row;
-}
-#cities {
+
+#dropdown {
   width: 100%;
   border: 2px solid #E6E6E6;
   border-radius: 6px;
@@ -64,16 +78,22 @@ body {
   color: #262626;
 }
 
-.grid-item {
+.currentgrid {
   display: flex;
   flex-direction: column;
 }
 
-
 .topleft {
-  grid-column: span 2;
+  grid-row: span 1;
   text-align: left;
   justify-content: center;
+
+}
+.botleft {
+  grid-row: span 1;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding-bottom: 5px;
 }
 .topright {
   grid-column: 4 / span 2;
@@ -82,11 +102,6 @@ body {
   flex-direction: row;
   align-items: center;
   justify-content: end;
-}
-.botleft {
-  grid-column: span 2;
-  justify-content: flex-end;
-  align-items: flex-start;
 }
 .botright {
   grid-column: 4 / span 2;
@@ -101,6 +116,7 @@ body {
 .tophalf { 
   text-align: center;
   padding: 5% 1% 6% 1%;
+  background-color: #FFFFFF;
 }
 .tophalf > .temperature{
   font-size: 15pt;

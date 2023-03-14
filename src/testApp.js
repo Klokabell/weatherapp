@@ -2,6 +2,8 @@ import './App.css';
 import React, { useEffect, useState } from 'react';
 import dateMaker from './dateMaker';
 import weatherDisplay from './weatherDisplay';
+import forecastDisplay from "./forecastDisplay" 
+
 
 const api = {
     key: "77c5e049fe0b5f2b238f8ee7a7c342c8",
@@ -16,15 +18,14 @@ const cityCoords = [
     { name: "Espoo", lat: "60.25", lon: "24.6667", id:4 }
 ]
 
-let date = dateMaker()
 
 function TestApp() {
 
     const [weather, setWeather] = useState([])
     const [forecast, setForecast] = useState([])
     const [isLoading2, setIsLoading2] = useState(true)
-    const [displaying, setDisplaying] = useState(0)
-    const [cities, setCities] = useState([])
+    const [displaying, setDisplaying] = useState(-1)
+ 
    
 
 
@@ -42,8 +43,6 @@ function TestApp() {
                         ])
                     })
                 )
-                setCities(response)
-                console.log(cities)
                 setWeather(response.map(res => res[0]))
                 setForecast(response.map(res => res[1]))
                 setIsLoading2(false)
@@ -62,12 +61,14 @@ function TestApp() {
     
 
     return(
-
-        <div>
+<div>
+        <div className='title'>
             <div className="banner"></div>
             <h1>Säätutka</h1>
-            <main>
-                <div className="gridContainer">
+        </div>
+        <div className="gridContainer">
+
+            <main>                
                     <div className="city-picker">
                             <select id="dropdown" value={displaying} onChange={handleChange}>
                                 <option value={-1}>All Cities</option>
@@ -77,22 +78,28 @@ function TestApp() {
                                 <option value={3}>Espoo</option>
                             </select>
                     </div>
-                    <div className='current'>
+                    <div>
                         {
                             (isLoading2) ? (<div>Loading</div>) 
-                            : (displaying>=0) ? (<div>{weatherDisplay(weather[displaying])}</div>) //check first if the value of displaying is over 0, with weather array indexes syncing with the values over 0
+                            : (displaying>=0) ? (//check first if the value of displaying is over 0, with weather array indexes syncing with the values over 0
+                                                    <div className='currentcity'>
+                                                        <div>{weatherDisplay(weather[displaying])}</div>
+                                                        <div className='forecast'>{forecastDisplay(forecast, displaying)}</div>
+                                                    </div>) 
                             : <div>
-                                    {weather.map((cityWeather, index) => ( // if the value is <0 (-1) then display all the cities
+                                    {weather.map((cityWeather, index) => ( // maps the weather
                                     <div key={index}>
-                                        {weatherDisplay(cityWeather)}
+                                        <div>{weatherDisplay(cityWeather)}</div>
+                                        <div className='forecast'>{forecastDisplay(forecast, index)}</div>
                                     </div>
                                 ))}
                               </div>
                         }
-                    </div>
-                </div>   
+                    </div>                
             </main>
-        </div>         
+        </div>                
+</div>
+       
     )
 
 }
