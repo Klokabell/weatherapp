@@ -1,0 +1,232 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+body {
+  background-color: #F8F9FA;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  height: 100%
+}
+
+.title {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+}
+.banner {
+  position: relative; 
+  background-color: #00A5E5; 
+  height: 3vh;
+}
+h1 {
+  font-size: 23pt;
+  color: #262626;
+  background-color: #FFFFFF;
+  text-align: center;
+  padding-bottom: 3%;
+  border-bottom: 2px solid #E6E6E6;
+}
+
+
+main {
+  width: 100vw;
+  height: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+/* The main weather flexbox, which contains the nested flexboxes inside it. */
+.flex-container {
+  display: flex;
+  flex-flow: column;
+  background-color: #f9f9f9;
+  margin: 0 5% 0 5%;
+}
+.city-picker {
+  text-align: center;
+  height: fit-content;
+}
+#dropdown {
+  width: 100%;
+  border: 2px solid #E6E6E6;
+  border-radius: 6px;
+  padding: 1% 2%;
+  font-size: 13pt;
+  color: #262626;
+}
+
+
+/* The container for the second item in the flexContainer, which displays the cities selected */
+.currentcity {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5%;
+}
+
+
+/* this this is flexbox for .current-weather-box and its nested flexbox children */
+.current-weather-box{ 
+  display: flex;
+  flex-flow: column wrap;
+  font-family:Arial;
+  background-color: #FFFFFF;
+  border: 2px solid #E6E6E6;
+  border-radius: 6px;
+  margin: 5% auto;
+  box-sizing: border-box;
+}
+.current-weather-item { /* this is to select each individual flex-box section together*/
+  display: flex;
+  flex-direction: column;
+}
+#current.tophalf{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+#current.bothalf {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+}
+.topleft, .botleft {
+  text-align: left;
+  justify-content: center;
+  padding-left: 5%;
+}
+.topright, .botright {
+  text-align: right;
+  justify-content: center;
+  padding-right: 5%;
+}
+.current-weather-item.topright {
+  display: flex;
+  flex-direction: row;
+  font-size:26pt;
+  color: #262626;
+  align-items: center;
+  padding-right: 5%;
+}
+.botleft, .botright {
+  justify-content: flex-end;
+  padding-bottom: 5%;
+}
+.botright {
+  text-align: right;  
+}
+.city {
+  font-size: 19pt;
+  font-weight: bold;
+  color: #262626;
+}
+.date {
+  font-size: 15pt;
+  color: #262626;
+}
+.sky, .time, .botright {
+  font-size: 13pt;
+  color: #70757A;
+}
+
+
+
+
+/* the container for the forecast weather boxes, a row of five */
+.forecast {
+  display: flex;
+  flex-direction: row;
+  gap: 2%;
+  padding: auto;
+}
+.plus{ /* each indivual section inside the forecast grid */
+  border: 2px solid #E6E6E6;
+  border-radius: 6px;
+}
+#future.tophalf { /* the top half of a plus container*/
+  text-align: center;
+  padding: 5% 1% 6% 1%;
+  background-color: #FFFFFF;
+  position: relative;
+}
+.tophalf > .temperature{
+  font-size: 15pt;
+}
+.tophalf > .temperature::after{
+  content: "°C";
+  position: absolute;
+  top: 77px;
+  font-size: 0.4em;
+}
+.temperature::after{
+  content: "°C";
+  position: absolute;
+  font-size: 0.4em;
+  font-weight: bold;
+}
+.tophalf > .time{
+  font-size: 13pt;
+}
+.tophalf > .icon{
+  
+}
+
+#future.bothalf{ /* the bottom half of the plus container*/
+  text-align: center;
+  background-color: #E5F6FD;
+  font-size: 10pt;
+  color: #70757A;
+  padding: 5%;
+}
+
+
+#ficon{  /* the icon used in the plus container*/
+  max-width: 60%;
+}
+
+
+/* @media (max-width: 600px) {
+  .gridContainer .mobile{
+    display: flex;
+    flex-direction: column;
+    background-color: #f9f9f9;
+    justify-content: space-around;
+  }
+  .icon{
+
+  }
+  .icon #wicon {
+    max-width: 80%;
+    max-height: 80%;
+    justify-content: right;
+  }
+
+  .plus.mobile{
+    border: 1px solid #E6E6E6;
+    border-radius: 6px;
+  }
+  .title.mobile{
+    width: 100vw;
+    min-width: 100%;
+  }
+ .city.mobile{ 
+  font-size: 16pt;
+  }
+  .date {
+    font-size: 15pt;
+    color: #262626;
+  }
+  .sky, .time, .botright {
+    font-size: 13pt;
+    color: #70757A;
+  }
+
+}
+ */

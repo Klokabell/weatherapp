@@ -1,6 +1,5 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
-import dateMaker from './dateMaker';
 import weatherDisplay from './weatherDisplay';
 import forecastDisplay from "./forecastDisplay" 
 
@@ -61,44 +60,45 @@ function TestApp() {
     
 
     return(
-<div>
-        <div className='title'>
-            <div className="banner"></div>
-            <h1>Säätutka</h1>
-        </div>
-        <div className="gridContainer">
-
-            <main>                
-                    <div className="city-picker">
-                            <select id="dropdown" value={displaying} onChange={handleChange}>
-                                <option value={-1}>All Cities</option>
-                                <option value={0}>Tampere</option>
-                                <option value={1}>Jyväskylä</option>
-                                <option value={2}>Kuopio</option>
-                                <option value={3}>Espoo</option>
-                            </select>
-                    </div>
-                    <div>
-                        {
-                            (isLoading2) ? (<div>Loading</div>) 
-                            : (displaying>=0) ? (//check first if the value of displaying is over 0, with weather array indexes syncing with the values over 0
-                                                    <div className='currentcity'>
-                                                        <div>{weatherDisplay(weather[displaying])}</div>
-                                                        <div className='forecast'>{forecastDisplay(forecast, displaying)}</div>
-                                                    </div>) 
-                            : <div>
-                                    {weather.map((cityWeather, index) => ( // maps the weather
-                                    <div key={index}>
-                                        <div>{weatherDisplay(cityWeather)}</div>
-                                        <div className='forecast'>{forecastDisplay(forecast, index)}</div>
+        <div className='container'>
+                <header className='title mobile'>
+                    <div className="banner"></div>
+                    <h1>Säätutka</h1>
+                </header>
+                <main>
+                    <div className="flex-container mobile">    
+                        <div className="city-picker">
+                                <select id="dropdown" value={displaying} onChange={handleChange}>
+                                    <option value={-1}>All Cities</option>
+                                    <option value={0}>Tampere</option>
+                                    <option value={1}>Jyväskylä</option>
+                                    <option value={2}>Kuopio</option>
+                                    <option value={3}>Espoo</option>
+                                </select>
+                        </div>
+                        <div className='cities-shown'>
+                            {
+                                (isLoading2) ? (<div>Loading</div>) 
+                                : (displaying>=0) ? (//check first if the value of displaying is over 0, with weather array indexes syncing with the values over 0
+                                                        <div className='individual-city'>
+                                                            <div className='current-weather'>{weatherDisplay(weather[displaying])}</div>
+                                                            <div className='forecast'>{forecastDisplay(forecast, displaying)}</div>
+                                                        </div>) 
+                                :   <div className='all-cities'>
+                                        {weather.map((cityWeather, index) => ( // maps the weather
+                                            <div className='individual-city' key={index}>
+                                                <div className='current-weather'>{weatherDisplay(cityWeather)}</div>
+                                                <div className='forecast'>{forecastDisplay(forecast, index)}</div>
+                                            </div>
+                                        ))}
                                     </div>
-                                ))}
-                              </div>
-                        }
+                            }
+                        </div>                
+
                     </div>                
-            </main>
-        </div>                
-</div>
+                </main>
+                
+        </div>
        
     )
 
