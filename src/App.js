@@ -5,12 +5,12 @@ import forecastDisplay from "./forecastDisplay"
 
 
 const api = {
-    key: "77c5e049fe0b5f2b238f8ee7a7c342c8", //                                                        <-------------- API Key goes here
+    key: "", //                                                        <-------------- API Key goes here
     currenturl:"https://api.openweathermap.org/data/2.5/weather?",
     forecasturl:"https://api.openweathermap.org/data/2.5/forecast?"
 }
 
-const cityCoords = [
+const cityCoords = [    //used to fetch the response data
     { name: "Tampere", lat: "61.4991",lon: "23.7871", id: 1 },
     { name: "Jyväskylä", lat: "62.2415", lon: "25.7209", id: 2 },
     { name: "Kupio", lat: "62.8924", lon: "27.677", id: 3 },            
@@ -32,7 +32,7 @@ function App() {
 
         const fetchWeather = async () => {
             try {
-               const response = await Promise.all(
+               const response = await Promise.all(   // awaits all the fetch requests for all the cities to be done to avoid undefined errors
                     cityCoords.map(city => {
                         return Promise.all([
                             fetch(`${api.currenturl}lat=${city.lat}&lon=${city.lon}&limit=1&appid=${api.key}&units=metric`)
@@ -51,7 +51,7 @@ function App() {
                 )
                 setWeather(response.map(res => res[0]))
                 setForecast(response.map(res => res[1]))
-                setIsLoading2(false)
+                setIsLoading2(false) // allows the page to switch from the loading to the data display. 
             } 
             catch(error) {
                 setError(true)
@@ -78,7 +78,7 @@ function App() {
                 <main>
                     <div className="flex-container mobile">    
                         <div className="city-picker">
-                                <select id="dropdown" value={displaying} onChange={handleChange}>
+                                <select id="dropdown" value={displaying} onChange={handleChange}> {/* This sets the value to match the choice, then renders the page to reflect the selection*/}
                                     <option value={-1}>All Cities</option>
                                     <option value={0}>Tampere</option>
                                     <option value={1}>Jyväskylä</option>
@@ -95,8 +95,8 @@ function App() {
                                                             <div className='current-weather mobile'>{weatherDisplay(weather[displaying])}</div>
                                                             <div className='forecast'>{forecastDisplay(forecast, displaying)}</div>
                                                         </div>) 
-                                :   <div className='all-cities'>
-                                        {weather.map((cityWeather, index) => ( // maps the weather
+                                :   <div className='all-cities'>     
+                                        {weather.map((cityWeather, index) => ( // maps the weather for each city to list them all
                                             <div className='individual-city' key={index}>
                                                 <div className='current-weather mobile'>{weatherDisplay(cityWeather)}</div>
                                                 <div className='forecast'>{forecastDisplay(forecast, index)}</div>

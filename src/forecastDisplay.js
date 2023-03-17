@@ -6,10 +6,10 @@ const forecastDisplay = (forecast, spot) => {
     const hours = [3, 6, 9, 12, 15]
 
 
-    let forecasts = hours.map(i => 
-                <div className="plus mobile" id={i} key={i}>
+    let forecasts = hours.map(i => // sets up an array called forecasts, uses the index of the array passed in that matches the value of the selection
+                <div className="plus mobile" id={i} key={i}>  
                     <div className="tophalf" id="future">
-                        <div className="time">{(dateMaker()[3] + i)%24}:00</div>
+                        <div className="time">{(dateMaker()[3] + i)%24}:00</div> 
                         <div className="icon"><img id='ficon' src={weathericon(forecast[spot].list[i/3].weather[0].icon)} alt="icon"></img></div>
                         <div className="temperature">{Math.round(forecast[spot].list[i/3].main.temp)}</div>
                     </div>
