@@ -43,7 +43,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 5% 0 5%;
+  padding: 0 15% 0 15%;
   box-sizing: border-box;
 }
 .city-picker {
@@ -53,7 +53,7 @@ main {
 }
 #dropdown {
   width: 100%;
-  padding: 2.5% 3%;
+  padding: 1vh 3%;
   border: 2px solid #E6E6E6;
   border-radius: 3px;
   font-family: Arial;
@@ -103,7 +103,7 @@ main {
 }
 .botright {
   text-align: right;
-  padding-right: 5%;
+  padding-right: 7%;
 }
 .current-weather-item.topright {
   display: flex;
@@ -148,7 +148,7 @@ main {
 }
 #future.tophalf {
   text-align: center;
-  padding: 5% 1% 6% 1%;
+  padding: 5% 0 6% 0;
   background-color: #FFFFFF;
   position: relative;
 }
@@ -171,7 +171,7 @@ img {
   background-color: #E5F6FD;
   font-size: 10pt;
   color: #70757A;
-  padding: 5%;
+  padding: 4%;
 }
 .wind, .humidity, .precipitation {
   object-fit: contain;
@@ -181,6 +181,9 @@ img {
 
 
 @media (max-width: 260px) {
+  .flex-container {
+    padding: 0 5% 0 5%;
+  }
   #current.tophalf, #current.bothalf {
     display: flex;
     flex-direction: column;
@@ -191,6 +194,9 @@ img {
   .current-weather-item {
     padding: 3% 0 0 0;
     text-align: center;
+  }
+  .current-weather {
+    padding: 1%;
   }
   .forecast-box {
     display: flex;

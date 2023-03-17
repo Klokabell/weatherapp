@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react'
 import App from './App'
 
-test('fetchweather gets called when displaying changes state', () => {
+test('fetchweather gets called when displaying state changes', () => {
   const fetchWeatherMock = jest.fn()
   const { rerender } = render(<App displaying={true} fetchWeather={fetchWeatherMock} />)
   

@@ -24,7 +24,7 @@ function App() {
     const [forecast, setForecast] = useState([])
     const [isLoading2, setIsLoading2] = useState(true)
     const [displaying, setDisplaying] = useState(-1)
- 
+    const [error, setError] = useState('')
    
 
 
@@ -36,20 +36,28 @@ function App() {
                     cityCoords.map(city => {
                         return Promise.all([
                             fetch(`${api.currenturl}lat=${city.lat}&lon=${city.lon}&limit=1&appid=${api.key}&units=metric`)
-                                .then(res=>res.json()),
+                                .then(res=> {
+                                    if(!res.ok)
+                                        {throw new Error(response.statusText)}
+                                    return res.json()}),
                             fetch(`${api.forecasturl}lat=${city.lat}&lon=${city.lon}&limit=1&appid=${api.key}&units=metric`)
-                                .then(res=>res.json())
+                                .then(res=>{
+                                    if(!res.ok)
+                                        {throw new Error(response.statusText)}
+                                    return res.json()})
                         ])
                     })
                 )
                 setWeather(response.map(res => res[0]))
                 setForecast(response.map(res => res[1]))
                 setIsLoading2(false)
-            } catch(error) {
-                console.log(error)
+            } 
+            catch(error) {
+                setError('Error with the data fetch: ', error.message)
             }
         }
         fetchWeather()
+
     }, [displaying])
 
     const handleChange = (event) => {
@@ -81,23 +89,21 @@ function App() {
                                 (isLoading2) ? (<div>Loading</div>) 
                                 : (displaying>=0) ? (//check first if the value of displaying is over 0, with weather array indexes syncing with the values over 0
                                                         <div className='individual-city'>
-                                                            <div className='current-weather'>{weatherDisplay(weather[displaying])}</div>
+                                                            <div className='current-weather mobile'>{weatherDisplay(weather[displaying])}</div>
                                                             <div className='forecast'>{forecastDisplay(forecast, displaying)}</div>
                                                         </div>) 
                                 :   <div className='all-cities'>
                                         {weather.map((cityWeather, index) => ( // maps the weather
                                             <div className='individual-city' key={index}>
-                                                <div className='current-weather'>{weatherDisplay(cityWeather)}</div>
+                                                <div className='current-weather mobile'>{weatherDisplay(cityWeather)}</div>
                                                 <div className='forecast'>{forecastDisplay(forecast, index)}</div>
                                             </div>
                                         ))}
                                     </div>
                             }
                         </div>                
-
                     </div>                
-                </main>
-                
+                </main>   
         </div>
        
     )
