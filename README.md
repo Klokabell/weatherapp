@@ -1,62 +1,56 @@
-### `npm start`
+Weather-App README
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+This is the front-end task for the Etteplan assignment during the Junior Software Engineer hiring process. It’s a weather display application for 4 cities Etteplan has offices in. It displays the weather currently in whichever option is chosen and the forecast for the next 15 hours. The ability to display all 4 cities on screen is also an option, with the layout being designed for mobile(Figure 1.) but being responsive enough for desktop (Figure 2.)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+ 
+Figure 1.   Mobile View
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+ 
+Figure 2.   Desktop View
+          
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The application can be run by using "npm run" in the console.
+Your API key goes in the api object in api.key, marked with a comment.
+The fetch unit test, found in App.test.js, can be run with "npm test".
+This application was written with React.js, using HTML and standard CSS only and initialised with “create-react-app”.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+How it Works -
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+The main process for retrieving and displaying the data comes from the App.js file’s function App, which serves as the core of everything.
+Using the onEffect hook it makes a series of fetch calls to "OpenWeatherAPI, both for the current weather status and the one for the future and does so for each city using the cityCoords object array. In order to keep the data in sync, the useEffect runs the requests through an async function that itself contains a Promise.all when using map on the cityCoords array and the map function contains a callback function that itself returns a Promise.all when performing first the fetch for current weather data and then the fetch for the forecast data. When both promises are completed, they update their respective states using setWeather or setForecast and pass the JSON response into the array. 
+The throw catch checks which of the fetch requests out of current and forecast weathers have failed. If there is an issue, it passes a message on screen asking to check the API key in case that’s the issue. 
+With the current and forecast weather states set and ready to be used, the isLoading state is changed to false and this allows the page to display the weather data.
+The return for App is used to display the main elements of the page with JSX, with the <main> tag mostly. The weather display and dropdown city selector are together in a flex-box column to keep them aligned and responsive. Continuing down the code places the inner elements of the current weather in nested flex-boxes too.
+If the page gets too narrow, below 260px width, rather than change the font size the page will change the layout to accommodate everything. The reasoning being that such a small screen would be difficult to read with a smaller font size (figure3).
+ 
+Figure 3.   Narrowest View
 
-## Learn More
+The dropdown menu options all have values set to determine which to display, with the default being -1 for all cities. On change, displaying is set to be the value of the option and then it gets used as the index value of the weather array which gets passed into the function “weatherDisplay” as an argument. 
+If the value of displaying is less than 0 it will display all the cities in a list using a map function and setting the key to be the value of the index.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Components
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+dateMaker : 
+Used to set the date for the weather and forecast displays to utilise when showing the time and date on their elements. Returns the array [month, day, time, hours].
+forecastDisplay: 
+Used to return the elements for all the forecast weather containers. One box divided in two horizontally to display the time, icon and temperature on top and the wind, humidity and precipitation on the bottom. Uses a map to pass in the forecast data and the “spot”, index of the object that the array used. The cities order is consistent throughout the code. Each item on the resultant array is an element in a flexbox.
 
-### Making a Progressive Web App
+rainCheck: 
+The response data doesn’t include rain when it hasn’t occurred for a while, as a result the precipitation isn’t always available. This checks if it exists and then either passes the value back if it does, or returns a string of “0 mm” if it doesn’t.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+weatherDisplay: 
+Returns the current weather elements in a flexbox Russian doll. The data chosen from the array gets passed in, and then each element in the flexbox selects the value given to display.
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+weathericon: 
+Obtains the weather icon based on the code given by the response data, passing the url to the img tag to use as the src.

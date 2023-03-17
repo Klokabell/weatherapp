@@ -5,7 +5,7 @@ import forecastDisplay from "./forecastDisplay"
 
 
 const api = {
-    key: "77c5e049fe0b5f2b238f8ee7a7c342c8",
+    key: "77c5e049fe0b5f2b238f8ee7a7c342c8", //                                                        <-------------- API Key goes here
     currenturl:"https://api.openweathermap.org/data/2.5/weather?",
     forecasturl:"https://api.openweathermap.org/data/2.5/forecast?"
 }
@@ -24,7 +24,7 @@ function App() {
     const [forecast, setForecast] = useState([])
     const [isLoading2, setIsLoading2] = useState(true)
     const [displaying, setDisplaying] = useState(-1)
-    const [error, setError] = useState('')
+    const [err, setError] = useState(false)
    
 
 
@@ -38,13 +38,14 @@ function App() {
                             fetch(`${api.currenturl}lat=${city.lat}&lon=${city.lon}&limit=1&appid=${api.key}&units=metric`)
                                 .then(res=> {
                                     if(!res.ok)
-                                        {throw new Error(response.statusText)}
+                                        throw new Error('Current weather API response not OK')
                                     return res.json()}),
                             fetch(`${api.forecasturl}lat=${city.lat}&lon=${city.lon}&limit=1&appid=${api.key}&units=metric`)
                                 .then(res=>{
                                     if(!res.ok)
-                                        {throw new Error(response.statusText)}
-                                    return res.json()})
+                                        {throw new Error('Weather forecast API response not OK')}
+                                return res.json()
+                            })
                         ])
                     })
                 )
@@ -53,7 +54,8 @@ function App() {
                 setIsLoading2(false)
             } 
             catch(error) {
-                setError('Error with the data fetch: ', error.message)
+                setError(true)
+                setIsLoading2(false)
             }
         }
         fetchWeather()
@@ -87,6 +89,7 @@ function App() {
                         <div className='cities-shown'>
                             {
                                 (isLoading2) ? (<div>Loading</div>) 
+                                : (err) ? (<div>Did you check your api key?</div>)
                                 : (displaying>=0) ? (//check first if the value of displaying is over 0, with weather array indexes syncing with the values over 0
                                                         <div className='individual-city'>
                                                             <div className='current-weather mobile'>{weatherDisplay(weather[displaying])}</div>
