@@ -20,6 +20,10 @@ Figure 1.   Mobile View
 
 Figure 2.   Desktop View
           
+
+
+Set Up- 
+
 To start with type "npm i" in the console to install the required dependencies.
 Once completed do a first time launch by typing "npm start".
 The application can then be run by using "npm run" in the console.
