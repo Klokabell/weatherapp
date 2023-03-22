@@ -25,8 +25,7 @@ Figure 2.   Desktop View
 Set Up- 
 
 To start with type "npm i" in the console to install the required dependencies.
-Once completed do a first time launch by typing "npm start".
-The application can then be run by using "npm run" in the console.
+Once completed do a first time launch by typing "npm start", this command can be used to launch the application from here on.
 Your API key goes in the api object in api.key, marked with a comment.
 The fetch unit test, found in App.test.js, can be run with "npm test".
 This application was written with React.js, using HTML and standard CSS only and initialised with “create-react-app”.
