@@ -1,11 +1,11 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
-import weatherDisplay from './weatherDisplay';
-import forecastDisplay from "./forecastDisplay" 
+import WeatherDisplay from './Components/WeatherDisplay';
+import ForecastDisplay from './Components/ForecastDisplay';
 
 
 const api = {
-    key: "", //                                                        <-------------- API Key goes here
+    key: "1ae597b551055fdf67ac4360fe7f384c", //                                                        <-------------- API Key goes here
     currenturl:"https://api.openweathermap.org/data/2.5/weather?",
     forecasturl:"https://api.openweathermap.org/data/2.5/forecast?"
 }
@@ -91,15 +91,15 @@ function App() {
                                 (isLoading2) ? (<div>Loading</div>) 
                                 : (err) ? (<div>Did you check your api key?</div>)
                                 : (displaying>=0) ? (//check first if the value of displaying is over 0, with weather array indexes syncing with the values over 0
-                                                        <div className='individual-city'>
-                                                            <div className='current-weather mobile'>{weatherDisplay(weather[displaying])}</div>
-                                                            <div className='forecast'>{forecastDisplay(forecast, displaying)}</div>
-                                                        </div>) 
+                                    <div className='individual-city'>
+                                        <WeatherDisplay weather ={weather[displaying]} />
+                                        <ForecastDisplay forecast={forecast} displaying={displaying} />
+                                    </div>) 
                                 :   <div className='all-cities'>     
                                         {weather.map((cityWeather, index) => ( // maps the weather for each city to list them all
                                             <div className='individual-city' key={index}>
-                                                <div className='current-weather mobile'>{weatherDisplay(cityWeather)}</div>
-                                                <div className='forecast'>{forecastDisplay(forecast, index)}</div>
+                                                <WeatherDisplay weather ={cityWeather} />
+                                                <ForecastDisplay forecast={forecast} displaying={index} />
                                             </div>
                                         ))}
                                     </div>
@@ -114,3 +114,6 @@ function App() {
 }
 
 export default App
+
+// <ForecastDisplay forecast={forecast} displaying={index} />
+// <WeatherDisplay weather ={weather[cityWeather]} />

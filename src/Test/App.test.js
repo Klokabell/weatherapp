@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react'
-import App from './App'
+import App from '../App'
 
 test('fetchweather gets called when displaying state changes', () => {
   const fetchWeatherMock = jest.fn()

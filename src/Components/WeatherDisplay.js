@@ -1,19 +1,20 @@
 import dateMaker from "./dateMaker"
-import weathericon from "./weatherIcon"
+import Weathericon from "./WeatherIcon"
 import rainCheck from "./raincheck"
 
-const weatherDisplay = (weather) => {
+const WeatherDisplay = ({weather}) => {
 
 
-	return ( 
-			<div className='current-weather-box'>
+	return (
+        <div className='current-weather mobile'>
+            <div className='current-weather-box'>
                 <div className="tophalf" id="current">
                     <div className='current-weather-item topleft'>
                         <div className='city mobile'>{weather.name}</div>
                         <div className="sky mobile">{weather.weather[0].description}</div>
                     </div>
                     <div className="current-weather-item topright">
-                        <div className="icon"><img id='wicon' src={weathericon(weather.weather[0].icon)} alt="icon"></img></div>
+                        <Weathericon icon={weather.weather[0].icon} iconclass="wicon"/>
                         <span className="temperature">{Math.round(weather.main.temp)}</span>
                     </div>
                 </div>
@@ -28,8 +29,8 @@ const weatherDisplay = (weather) => {
                         <div className="precipitation">Precipitation (1h): {rainCheck(weather, 1)}</div>
                     </div>
                 </div>
-
             </div>
+        </div>
 )}
 
-export default weatherDisplay
+export default WeatherDisplay
