@@ -1,6 +1,6 @@
-###Weather-App README
+### Weather-App README
 
-##About:
+## About:
 
 This is the front-end task for the Etteplan assignment during the Junior Software Engineer hiring process. It’s a weather display application for 4 cities Etteplan has offices in. It displays the weather currently in whichever option is chosen and the forecast for the next 15 hours. The ability to display all 4 cities on screen is also an option, with the layout being designed for mobile (Figure 1.) but being responsive enough for desktop (Figure 2.)
 
@@ -22,7 +22,7 @@ Figure 2.   Desktop View
           
 
 
-##Set Up- 
+## Set Up- 
 
 - To start with type "npm i" in the console to install the required dependencies.
 - Once completed do a first time launch by typing "npm start", this command can be used to launch the application from here on.
