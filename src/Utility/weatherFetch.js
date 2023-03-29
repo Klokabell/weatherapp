@@ -8,7 +8,7 @@ const FetchWeather = async () => {
 
 
     const api = {
-        key: "1ae597b551055fdf67ac4360fe7f384c", //                                                        <-------------- API Key goes here
+        key: "", //                                                        <-------------- API Key goes here
         currenturl:"https://api.openweathermap.org/data/2.5/weather?",
         forecasturl:"https://api.openweathermap.org/data/2.5/forecast?"
     }
