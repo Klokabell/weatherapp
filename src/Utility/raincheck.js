@@ -1,4 +1,3 @@
-
 const rainCheck = (raining, hour) =>{
     if(raining.rain){
         return raining.rain[hour+"h"] +"mm"

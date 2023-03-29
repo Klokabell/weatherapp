@@ -2,111 +2,77 @@ import './App.css';
 import React, { useEffect, useState } from 'react';
 import WeatherDisplay from './Components/WeatherDisplay';
 import ForecastDisplay from './Components/ForecastDisplay';
+import FetchWeather from './Utility/weatherFetch';
 
 
-const api = {
-    key: "1ae597b551055fdf67ac4360fe7f384c", //                                                        <-------------- API Key goes here
-    currenturl:"https://api.openweathermap.org/data/2.5/weather?",
-    forecasturl:"https://api.openweathermap.org/data/2.5/forecast?"
-}
-
-const cityCoords = [    //used to fetch the response data
-    { name: "Tampere", lat: "61.4991",lon: "23.7871", id: 1 },
-    { name: "Jyväskylä", lat: "62.2415", lon: "25.7209", id: 2 },
-    { name: "Kupio", lat: "62.8924", lon: "27.677", id: 3 },            
-    { name: "Espoo", lat: "60.25", lon: "24.6667", id:4 }
-]
 
 
 function App() {
 
-    const [weather, setWeather] = useState([])
-    const [forecast, setForecast] = useState([])
-    const [isLoading2, setIsLoading2] = useState(true)
-    const [displaying, setDisplaying] = useState(-1)
-    const [err, setError] = useState(false)
-   
-
+    const [displaying, setDisplaying] = useState(-1);
+    const [data, setData] = useState(null);
 
     useEffect(() => {
-
-        const fetchWeather = async () => {
-            try {
-               const response = await Promise.all(   // awaits all the fetch requests for all the cities to be done to avoid undefined errors
-                    cityCoords.map(city => {
-                        return Promise.all([
-                            fetch(`${api.currenturl}lat=${city.lat}&lon=${city.lon}&limit=1&appid=${api.key}&units=metric`)
-                                .then(res=> {
-                                    if(!res.ok)
-                                        throw new Error('Current weather API response not OK')
-                                    return res.json()}),
-                            fetch(`${api.forecasturl}lat=${city.lat}&lon=${city.lon}&limit=1&appid=${api.key}&units=metric`)
-                                .then(res=>{
-                                    if(!res.ok)
-                                        {throw new Error('Weather forecast API response not OK')}
-                                return res.json()
-                            })
-                        ])
-                    })
-                )
-                setWeather(response.map(res => res[0]))
-                setForecast(response.map(res => res[1]))
-                setIsLoading2(false) // allows the page to switch from the loading to the data display. 
-            } 
-            catch(error) {
-                setError(true)
-                setIsLoading2(false)
-            }
+        async function fetchData() {
+            const fetched = await FetchWeather();
+            setData(fetched);
         }
-        fetchWeather()
-
-    }, [displaying])
+        fetchData();
+    }, [displaying]);
 
     const handleChange = (event) => {
-            setDisplaying(event.target.value); //pass the value of the city to setDisplay
+        setDisplaying(event.target.value); //pass the value of the city to setDisplay
+    };
+
+    if (!data) {
+        return <div>Loading...</div>;
     }
 
-
-    
-
-    return(
-        <div className='container'>
-                <header className='title mobile'>
-                    <div className="banner"></div>
-                    <h1>Säätutka</h1>
-                </header>
-                <main>
-                    <div className="flex-container mobile">    
-                        <div className="city-picker">
-                                <select id="dropdown" value={displaying} onChange={handleChange}> {/* This sets the value to match the choice, then renders the page to reflect the selection*/}
-                                    <option value={-1}>All Cities</option>
-                                    <option value={0}>Tampere</option>
-                                    <option value={1}>Jyväskylä</option>
-                                    <option value={2}>Kuopio</option>
-                                    <option value={3}>Espoo</option>
-                                </select>
+    const renderCities = () => {
+        if (data.err) {
+            return <div>Did you check your api key?</div>;
+        }
+        if (displaying >= 0) {
+            return (
+                <div className='individual-city'>
+                    <WeatherDisplay weather={data.weather[displaying]} />
+                    <ForecastDisplay forecast={data.forecast} displaying={displaying} />
+                </div>
+            );
+        } else {
+            return (
+                <div className='all-cities'>
+                    {data.weather.map((cityWeather, index) => (
+                        <div className='individual-city' key={index}>
+                            <WeatherDisplay weather={cityWeather} />
+                            <ForecastDisplay forecast={data.forecast} displaying={index} />
                         </div>
-                        <div className='cities-shown'>
-                            {
-                                (isLoading2) ? (<div>Loading</div>) 
-                                : (err) ? (<div>Did you check your api key?</div>)
-                                : (displaying>=0) ? (//check first if the value of displaying is over 0, with weather array indexes syncing with the values over 0
-                                    <div className='individual-city'>
-                                        <WeatherDisplay weather ={weather[displaying]} />
-                                        <ForecastDisplay forecast={forecast} displaying={displaying} />
-                                    </div>) 
-                                :   <div className='all-cities'>     
-                                        {weather.map((cityWeather, index) => ( // maps the weather for each city to list them all
-                                            <div className='individual-city' key={index}>
-                                                <WeatherDisplay weather ={cityWeather} />
-                                                <ForecastDisplay forecast={forecast} displaying={index} />
-                                            </div>
-                                        ))}
-                                    </div>
-                            }
-                        </div>                
-                    </div>                
-                </main>   
+                    ))}
+                </div>
+            );
+        }
+    };
+
+    return (
+        <div className='container'>
+            <header className='title mobile'>
+                <div className='banner'></div>
+                <h1>Säätutka</h1>
+            </header>
+            <main>
+                <div className='flex-container mobile'>
+                    <div className='city-picker'>
+                        <select id='dropdown' value={displaying} onChange={handleChange}>
+                            <option value={-1}>All Cities</option>
+                            <option value={0}>Tampere</option>
+                            <option value={1}>Jyväskylä</option>
+                            <option value={2}>Kuopio</option>
+                            <option value={3}>Espoo</option>
+                        </select>
+                    </div>
+                    <div className='cities-shown'>{renderCities()}</div>
+                </div>
+            </main>
         </div>
        
     )

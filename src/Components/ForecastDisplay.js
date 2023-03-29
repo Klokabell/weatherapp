@@ -1,6 +1,6 @@
-import dateMaker from "./dateMaker"
+import dateMaker from "../Utility/dateMaker"
 import WeatherIcon from "./WeatherIcon"
-import rainCheck from "./raincheck"
+import rainCheck from "../Utility/raincheck"
 
 const ForecastDisplay = ({forecast, displaying}) => {
     const hours = [3, 6, 9, 12, 15]
